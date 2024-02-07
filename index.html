@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO List</title>
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    
+    <header class="header">
+        <div class="header__inner container">
+            <h1 class="header__logo logo">TODO LIST</h1>
+
+            <div class="header__control">
+                <form action="/" method="GET" class="header__form">
+                    <fieldset class="header__form-fieldset">
+                        <legend aria-hidden="true" class="element-hidden">TODO
+                            Task Search</legend>
+                        <input type="search" name="task-search"
+                            placeholder="Search note..."
+                            aria-label="Field, dedicated for TODO task search"
+                            class="header__search">
+
+                        <img src="/images/icons/searchIcon.svg"
+                            alt="Click to search TODO tasks using your query"
+                            width="21" height="21"
+                            class="header__search-icon search-icon">
+                    </fieldset>
+                </form>
+
+                <!-- TODO: create custom dropdown menu -->
+
+                <select name="filters" id="filters-list" class="header__filters"
+                    aria-label="Filter your tasks by completion">
+                    <option value="All">All</option>
+                    <option value="Complete">Complete</option>
+                    <option value="Incomplete">Incomplete</option>
+                </select>
+
+                <button class="header__nightmode nightmode-button">
+                    <img src="/images/icons/lightModeIcon.svg" alt="">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="main__inner container">
+            <div class="main__loader loader loader_animated"></div>
+            <img src="/images/emptyTodoList.svg"
+                alt="The detective with a great moustache, dressed in a purple coat, hat, shoes and black pants looks through a magnifying glass and follows the trail"
+                class="main__empty-list-image">
+            <p class="main__empty-list-text">Empty...</p>
+        </div>
+    </main>
+
+    <script defer src="scripts/searchFrom.js" type="text/javascript"></script>
 </body>
+
 </html>

@@ -1,0 +1,27 @@
+// Center flex block
+@mixin flex-center($isInline: false) {
+    @if $isInline {
+        display: inline-flex;
+    } @else {
+        display: flex;
+    }
+
+    justify-content: center;
+    align-items: center;
+}
+
+// Center block absolutely
+@mixin abs-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin custom-focus($outline-color, $outline-width: 2px, $outline-style: solid) {
+    &:focus {
+        outline-width: $outline-width;
+        outline-style: $outline-style;
+        outline-color: $outline-color;
+    }
+}

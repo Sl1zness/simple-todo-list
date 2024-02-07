@@ -1,0 +1,62 @@
+// Extra-small devices
+$xsm: 480px;
+// Small devices and tablets
+$sm: 576px;
+// Medium tablets
+$md: 768px;
+// Large tablets and small desktops
+$lg: 992px;
+// XLarge devices
+$xl: 1200px;
+// XXLarge devices 
+$xxl: 1400px;
+
+@mixin xsmall-device {
+    @media all and (max-width: $xsm) {
+        @content;
+    }
+}
+
+@mixin small-device {
+    @media all and (max-width: $sm) {
+        @content;
+    }
+}
+
+@mixin medium-device {
+    @media all and (max-width: $md) {
+        @content;
+    }
+}
+
+@mixin large-device {
+    @media all and (max-width: $lg) {
+        @content;
+    }
+}
+
+@mixin xlarge-device {
+    @media all and (max-width: $xl) {
+        @content;
+    }
+}
+
+@mixin xxlarge-device {
+    @media all and (max-width: $xxl) {
+        @content;
+    }
+}
+
+@mixin hover {
+    @media (hover: hover) {
+        &:hover {
+            @content;
+        }
+    }
+
+    @media (hover: none) {
+        &:active {
+            @content;
+        }
+    }
+}
