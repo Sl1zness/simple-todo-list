@@ -23,6 +23,15 @@
         margin-top: 30px;
     }
 
+    &__empty {
+        @include flex-center;
+        flex-direction: column;
+    }
+
+    &__empty_hidden {
+        display: none;
+    }
+
     &__empty-list-image {
         width: 221px;
         height: auto;
