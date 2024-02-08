@@ -3,10 +3,12 @@
         width: 0;
         transform: translateX(-50px);
     }
+
     50% {
         width: 50px;
         transform: translateX(0);
     }
+
     100% {
         width: 0;
         transform: translateX(50px);
@@ -23,19 +25,31 @@
         margin-top: 30px;
     }
 
-    &__empty-list-image {
-        width: 221px;
-        height: auto;
+    &__empty {
+        @include flex-center;
+        flex-direction: column;
+
+        &_hidden {
+            display: none;
+        }
     }
 
-    &__empty-list-text {
-        margin-top: 20px;
-        font-size: 20px;
-        font-weight: 400;
+    &__empty-list {
+        &-image {
+            width: 221px;
+            height: auto;
+        }
+
+        &-text {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 400;
+        }
     }
 
     &__loader {
-        // TODO: move from after to div (maybe)
+        margin-top: 50px;
+
         &::after {
             content: "";
             width: 0px;
@@ -43,6 +57,91 @@
             display: block;
             background-color: #fff;
             border-radius: var(--border-radius-large);
+        }
+    }
+
+    &__tasks-list {
+        display: flex;
+        flex-direction: column;
+        max-width: 520px;
+        width: 100%;
+    }
+
+    &__task {
+        padding-block: 17px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-grow: 1;
+        border-bottom: 1px solid var(--color-accent);
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &-left {
+            max-width: 463px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &-right {
+            display: none;
+            flex-direction: row;
+            align-items: center;
+
+            &_visible {
+                display: flex;
+            }
+        }
+
+        &-checkbox {
+            min-width: 26px;
+            width: 26px;
+            height: 26px;
+            border: 1px solid var(--color-accent);
+            border-radius: var(--border-radius-small);
+            background-color: var(--color-dark);
+            margin: 0;
+            appearance: none;
+            cursor: pointer;
+
+            &:checked {
+                background-color: var(--color-accent);
+                position: relative;
+
+                &::after {
+                    content: "";
+                    background: url(../../images/icons/checkbox.svg) center center no-repeat;
+                    background-size: 65%;
+                    width: 100%;
+                    height: 100%;
+                    
+                    @include abs-center;
+                }
+            }
+        }
+        
+        &-header {
+            margin-left: 17px;
+            font-size: 20px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+
+            &_crossed {
+                text-decoration: line-through;
+            }
+        }
+
+        &-action {
+            cursor: pointer;
+            &:last-child {
+                display: inline-block;
+                margin-left: 8px;
+            }
         }
     }
 }
