@@ -1,0 +1,16 @@
+.button {
+    padding: 10px 22px;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--border-radius-medium);
+    font-size: 18px;
+    font-family: "Kanit";
+    font-weight: 500;
+    background-color: var(--color-accent);
+    color: var(--color-grey);
+    cursor: pointer;
+
+    &_dark-bg {
+        background-color: var(--color-dark);
+        color: var(--color-accent);
+    }
+}

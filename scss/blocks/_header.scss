@@ -9,7 +9,8 @@
         margin-top: 18px;
     }
 
-    &__control, &__form {
+    &__control,
+    &__form {
         display: flex;
         flex-direction: row;
         column-gap: 10px;
@@ -19,13 +20,13 @@
         display: flex;
         flex-direction: row;
         flex: 5;
-    }
 
-    &__form-fieldset {
-        display: flex;
-        flex-direction: row;
-        position: relative;
-        flex: 1;
+        &-fieldset {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            flex: 1;
+        }
     }
 
     &__search {
@@ -41,14 +42,14 @@
         color: var(--color-grey-alt);
 
         @include custom-focus(var(--color-accent));
-    }
 
-    &__search-icon {
-        position: absolute;
-        right: 2%;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
+        &-icon {
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     }
 
     &__filters {
