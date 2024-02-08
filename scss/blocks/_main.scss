@@ -20,9 +20,11 @@
     &__inner {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         margin-top: 30px;
+        position: relative;
+        max-height: 500px;
+        height: 100%;
     }
 
     &__empty {
@@ -65,6 +67,21 @@
         flex-direction: column;
         max-width: 520px;
         width: 100%;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-grey) transparent;
+        
+        &::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-grey);
+        }
     }
 
     &__task {
@@ -91,6 +108,7 @@
             display: none;
             flex-direction: row;
             align-items: center;
+            margin-right: 10px;
 
             &_visible {
                 display: flex;
@@ -143,6 +161,20 @@
                 margin-left: 8px;
             }
         }
+    }
+
+    &__add-task-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: url("../../images/icons/addTodoTask.svg") center center no-repeat;
+        background-color: var(--color-accent);
+        border: 0;
+        box-shadow: 0px 0px 3px 3px var(--color-accent);
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        cursor: pointer;
     }
 }
 
