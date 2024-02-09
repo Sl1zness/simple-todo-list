@@ -66,6 +66,10 @@
             margin-top: 10px;
             height: 150px;
         }
+
+        &-input_outlined {
+            border: 1px solid var(--color-warning);
+        }
     }
 
     &__buttons {
@@ -73,5 +77,20 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+    }
+}
+
+.warning {
+    color: var(--color-warning);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.header-warning {
+    display: none;
+    margin-top: 3px;
+
+    &_shown {
+        display: flex;
     }
 }
