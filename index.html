@@ -47,8 +47,6 @@
         </div>
     </header>
 
-
-    <!-- TODO: add task creation button -->
     <main class="main">
         <div class="main__inner container">
             <div class="main__loader loader loader_animated"></div>
@@ -84,12 +82,13 @@
             <h2 class="modal__header">EDIT TASK</h2>
             <form action="/" class="modal__form">
                 <input type="text" name="task-header" placeholder="Input note header" aria-label="Input note header here" value="" class="modal__form-input">
+                <p class="warning header-warning">Name must be at least 4 characters long</p>
                 <textarea name="task-description" placeholder="Input description" aria-label="Input note description here" class="modal__form-text"></textarea>
                 
                 <fieldset class="modal__buttons">
                     <legend class="element-hidden">Actions with task modal</legend>
-                    <button type="button" class="modal__button button button_dark-bg">CANCEL</button>
-                    <button type="submit" class="modal__button button">APPLY</button>
+                    <button type="button" class="modal__button-cancel button button_dark-bg">CANCEL</button>
+                    <button type="submit" class="modal__button-submit button">APPLY</button>
                 </fieldset>
             </form>
         </div>
@@ -106,8 +105,8 @@
                 
                 <fieldset class="modal__buttons">
                     <legend class="element-hidden">Actions with task modal</legend>
-                    <button type="button" class="modal__button button button_dark-bg">CANCEL</button>
-                    <button type="submit" class="modal__button button">CREATE</button>
+                    <button type="button" class="modal__button-cancel button button_dark-bg">CANCEL</button>
+                    <button type="submit" class="modal__button-submit button">CREATE</button>
                 </fieldset>
             </form>
         </div>
