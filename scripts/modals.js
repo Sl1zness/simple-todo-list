@@ -1,11 +1,14 @@
 "use strict"
 
 
-const modalWindows = document.getElementsByClassName("modal");
-const [addTaskButton] = document.getElementsByClassName("main__add-task-button");
+import createTaskBlock from "./createTaskBlock.js";
 
-const findItemByClassName = className => {
-    for (const elem of modalWindows) {
+const modals = document.querySelectorAll(".modal");
+const addTaskButton = document.querySelector(".main__add-task-button");
+let taskData = {};
+
+const findElementByClassName = className => {
+    for (const elem of modals) {
         if (elem.classList.contains(className)) {
             return elem;
         }
@@ -14,82 +17,113 @@ const findItemByClassName = className => {
     return null;
 }
 
-const showModal = modalClassName => {
-    const modal = findItemByClassName(modalClassName);
-
-    if (modal != null) {
-        const [popup] = modal.getElementsByClassName("modal__inner");
-        const [bg] = modal.getElementsByClassName("modal__bg");
-
-        popup.classList.add("modal__inner_shown");
-        bg.classList.add("modal__bg_shown");
-    } else {
-        console.log("MODAL WINDOW NOT FOUND");
-    }
+// TODO: fix put method a bit
+const sendForm = (formData, method, path) => {
+    fetch("http://127.0.0.1:3000/".concat(path), {
+        method: method,
+        body: formData
+    })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err.message));
 }
 
-const sendToTheServer = (activeElem, method) => {
-    const form = activeElem.parentElement.parentElement;
-    let formData = new FormData(form);
-    let isValidated = true;
-    const warning = form.querySelector(".header-warning");
+const validateForm = (form, method) => {
+    const formData = new FormData(form);
 
-    warning.classList.remove("header-warning_shown");
-    warning.previousElementSibling.classList.remove("modal__form-input_outlined");
+    let isValid = true;
 
     for (const elem of formData) {
         if (elem[0] == "task-header") {
             if (elem[1].length <= 3) {
-                isValidated = false;
                 const warning = form.querySelector(".header-warning");
+                const input = form.querySelector(".modal__form-input");
 
+                input.classList.add("modal__form-input_outlined");
                 warning.classList.add("header-warning_shown");
-                warning.previousElementSibling.classList.add("modal__form-input_outlined");
+                isValid = false;
+
+                return false;
             }
         }
     }
 
-    if (isValidated) {
-        fetch("http://127.0.0.1/", {
-            method: method,
-            body: formData
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err.message));
+    if (isValid) {
+        formData.append("id", taskData["id"]);
+        formData.append("isChecked", taskData["isChecked"]);
+        if (method == "POST") {
+            sendForm(formData, "POST", "add");
+        } else if (method == "PUT") {
+            sendForm(formData, "PUT", "change-task");
+        }
     }
+
+    return true;
+}
+
+const closeModalListeners = () => {
+    for (const elem of modals) {
+        const bg = elem.querySelector(".modal__bg");
+        const card = elem.querySelector(".modal__inner");
+        const cancelButton = elem.querySelector(".modal__button-cancel");
+        const submitButton = elem.querySelector(".modal__button-submit");
+
+        const removeActiveClass = () => {
+            bg.classList.remove("modal__bg_shown");
+            card.classList.remove("modal__inner_shown");
+        }
+
+        bg.addEventListener("click", () => {
+            removeActiveClass();
+        });
+
+        cancelButton.addEventListener("click", () => {
+            removeActiveClass();
+        });
+
+        submitButton.addEventListener("click", e => {
+            e.preventDefault();
+            let queryMethod = "POST";
+            const form = elem.querySelector(".modal__form");
+            if (elem.classList.contains("modal__edit-task")) {
+                queryMethod = "PUT";
+            }
+            const validationRes = validateForm(form, queryMethod);
+
+            validationRes == true ? removeActiveClass() : "";
+        });
+    }
+}
+
+const showModal = (modalClassName, data = null) => {
+    const modal = findElementByClassName(modalClassName);
+
+    if (modal == null) {
+        console.log("MODAL NOT FOUND");
+        return null;
+    }
+
+    const bg = modal.querySelector(".modal__bg");
+    const card = modal.querySelector(".modal__inner");
+
+    if (data != null) {
+        taskData = data;
+
+        const taskHeader = modal.querySelector(".modal__form-input");
+        const taskDescription = modal.querySelector(".modal__form-text");
+
+        taskHeader.setAttribute("value", data["task-header"]);
+        taskDescription.innerText = data["task-description"];
+    }
+
+    bg.classList.add("modal__bg_shown");
+    card.classList.add("modal__inner_shown");
 }
 
 addTaskButton.addEventListener("click", () => {
     showModal("modal__add-task");
 });
 
-for (const elem of modalWindows) {
-    // TODO: form reset() method does not work for any reason
-    const form = document.querySelector(".modal__form");
-
-    const bg = elem.querySelector(".modal__bg");
-    const popup = elem.querySelector(".modal__inner");
-    const button = elem.querySelector('.modal__button[type="button"]');
-
-    bg.addEventListener("click", () => {
-        bg.classList.remove("modal__bg_shown");
-        popup.classList.remove("modal__inner_shown");
-    });
-
-    button.addEventListener("click", () => {
-        bg.classList.remove("modal__bg_shown");
-        popup.classList.remove("modal__inner_shown");
-    });
-
-    if (elem.classList.contains("modal__add-task")) {
-        const addButton = elem.querySelector('.modal__button[type="submit"]');
-
-        addButton.addEventListener("click", e => {
-            e.preventDefault();
-
-            sendToTheServer(addButton, "POST");
-        })
-    }
-}
+closeModalListeners();
 
 export default showModal;
