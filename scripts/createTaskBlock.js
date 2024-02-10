@@ -1,7 +1,7 @@
 "use strict"
 
 
-import showModal from "./modals.js";
+import { showModal, deleteTask } from "./modals.js";
 import isTouchScreen from "./isTouchScreen.js";
 
 // TODO: refactor as a custom HTML element (maybe...)
@@ -21,7 +21,7 @@ const createTaskBlock = data => {
     const itemCheckbox = document.createElement("input");
     itemCheckbox.setAttribute("type", "checkbox");
     itemCheckbox.setAttribute("name", "task-checkmark");
-    if (data.isChecked) {
+    if (data.isChecked == true) {
         itemCheckbox.setAttribute("checked", "");
         itemHeader.classList.add("main__task-header_crossed");
     }
@@ -69,9 +69,11 @@ const createTaskBlock = data => {
         if (itemCheckbox.attributes.getNamedItem("checked") != null) {
             itemCheckbox.removeAttribute("checked");
             itemHeader.classList.remove("main__task-header_crossed");
+            data["isChecked"] = false;
         } else {
             itemCheckbox.setAttribute("checked", "");
             itemHeader.classList.add("main__task-header_crossed");
+            data["isChecked"] = true;
         }
     });
 
@@ -81,6 +83,7 @@ const createTaskBlock = data => {
 
     removeTaskIcon.addEventListener("click", () => {
         itemContainer.parentElement.removeChild(itemContainer);
+        deleteTask(data);
     });
 
     return itemContainer;
