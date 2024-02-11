@@ -22,9 +22,9 @@
                         <input type="search" name="task-search"
                             placeholder="Search note..."
                             aria-label="Field, dedicated for TODO task search"
-                            class="header__search">
+                            class="header__search" value="">
 
-                        <img src="/images/icons/searchIcon.svg"
+                        <img role="button" src="/images/icons/searchIcon.svg"
                             alt="Click to search TODO tasks using your query"
                             width="21" height="21"
                             class="header__search-icon search-icon">
@@ -114,7 +114,8 @@
 
     <script defer src="scripts/fetchFromDb.js" type="module"></script>
     <script defer src="scripts/modals.js" type="module"></script>
-    <script defer src="scripts/nighmode.js"></script>
+    <script defer src="scripts/nightmode.js" type="text/javascript"></script>
+    <script defer src="scripts/search.js" type="module"></script>
 </body>
 
 </html>
