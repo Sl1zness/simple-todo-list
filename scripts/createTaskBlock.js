@@ -1,7 +1,7 @@
 "use strict"
 
 
-import { showModal, deleteTask } from "./modals.js";
+import { showModal, deleteTask, putCheckbox } from "./modals.js";
 import isTouchScreen from "./isTouchScreen.js";
 
 // TODO: refactor as a custom HTML element (maybe...)
@@ -75,6 +75,7 @@ const createTaskBlock = data => {
             itemHeader.classList.add("main__task-header_crossed");
             data["isChecked"] = true;
         }
+        putCheckbox(data["id"], data["isChecked"]);
     });
 
     editTaskIcon.addEventListener("click", () => {

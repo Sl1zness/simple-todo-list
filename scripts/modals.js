@@ -17,6 +17,7 @@ const findElementByClassName = className => {
     return null;
 }
 
+// TODO: merge 3 fetch methods
 const sendForm = (method, path, formData) => {
     fetch("http://127.0.0.1:3000/".concat(path), {
         method: method,
@@ -33,9 +34,23 @@ const deleteTask = data => {
     })
         .then(res => console.log(res.status))
         .catch(err => console.log(err.message));
-    
-    setInterval(() => {location.reload()}, 200);
+
+    setInterval(() => { location.reload() }, 200);
 }
+
+
+const putCheckbox = (id, state) => {
+    fetch("http://127.0.0.1:3000/change-mark/".concat(id), {
+        method: "PATCH",
+        body: JSON.stringify({ "isChecked": state }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => console.log(res.status))
+    .catch(err => console.log(err.message));
+}
+
 
 const validateForm = (form, method) => {
     const formData = new FormData(form);
@@ -67,7 +82,7 @@ const validateForm = (form, method) => {
         }
 
         // Bad try on livereload :p
-        setInterval(() => {location.reload()}, 200);
+        setInterval(() => { location.reload() }, 200);
     }
 
     return true;
@@ -140,4 +155,4 @@ addTaskButton.addEventListener("click", () => {
 
 closeModalListeners();
 
-export { showModal, deleteTask };
+export { showModal, deleteTask, putCheckbox };

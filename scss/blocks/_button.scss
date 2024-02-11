@@ -12,5 +12,9 @@
     &_dark-bg {
         background-color: var(--color-dark);
         color: var(--color-accent);
+
+        &_lightmode {
+            background-color: var(--color-grey);
+        }
     }
 }
