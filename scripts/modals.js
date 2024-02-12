@@ -34,8 +34,6 @@ const deleteTask = data => {
     })
         .then(res => console.log(res.status))
         .catch(err => console.log(err.message));
-
-    setInterval(() => { location.reload() }, 200);
 }
 
 
@@ -47,8 +45,8 @@ const putCheckbox = (id, state) => {
             "Content-Type": "application/json"
         }
     })
-    .then(res => console.log(res.status))
-    .catch(err => console.log(err.message));
+        .then(res => console.log(res.status))
+        .catch(err => console.log(err.message));
 }
 
 
@@ -81,8 +79,15 @@ const validateForm = (form, method) => {
             sendForm("PUT", "change-task", formData);
         }
 
-        // Bad try on livereload :p
-        setInterval(() => { location.reload() }, 200);
+        const buff = {};
+        for (const elem of formData) {
+            buff[elem[0]] = elem[1];
+        }
+
+        if (method == "POST") {
+            const tasksList = document.querySelector(".main__tasks-list");
+            tasksList.append(createTaskBlock(buff));
+        }
     }
 
     return true;
