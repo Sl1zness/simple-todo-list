@@ -27,7 +27,7 @@ fetch("http://127.0.0.1:3000/", {
 .then(data => listItems = data)
 .catch(err => console.log(err.message))
 .finally(() => {
-    container.removeChild(loader);
+    if (container.querySelector(".loader") != undefined) container.removeChild(loader);
 
     if (isObjectEmpty(listItems)) {
         emptyListScreen.classList.remove("main__empty_hidden");

@@ -5,4 +5,27 @@ body {
     line-height: 1.28;
     color: var(--color-grey);
     background-color: var(--color-dark);
+
+    input,
+    textarea {
+        color: var(--color-grey);
+        background-color: var(--color-dark);
+        border: 1px solid var(--color-grey);
+    }
+}
+
+.body__lightmode {
+    color: var(--color-dark) !important;
+    background-color: var(--color-grey) !important;
+
+    input,
+    textarea {
+        color: var(--color-dark);
+        background-color: var(--color-grey);
+        border: 1px solid var(--color-accent);
+
+        &::placeholder {
+            color: var(--color-lightmode-placeholder);
+        }
+    }
 }

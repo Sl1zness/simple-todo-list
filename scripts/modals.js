@@ -17,8 +17,8 @@ const findElementByClassName = className => {
     return null;
 }
 
-// TODO: fix put method a bit
-const sendForm = (formData, method, path) => {
+// TODO: merge 3 fetch methods
+const sendForm = (method, path, formData) => {
     fetch("http://127.0.0.1:3000/".concat(path), {
         method: method,
         body: formData
@@ -27,6 +27,28 @@ const sendForm = (formData, method, path) => {
         .then(data => console.log(data))
         .catch(err => console.log(err.message));
 }
+
+const deleteTask = data => {
+    fetch("http://127.0.0.1:3000/del-task/".concat(data["id"]), {
+        method: "DELETE"
+    })
+        .then(res => console.log(res.status))
+        .catch(err => console.log(err.message));
+}
+
+
+const putCheckbox = (id, state) => {
+    fetch("http://127.0.0.1:3000/change-mark/".concat(id), {
+        method: "PATCH",
+        body: JSON.stringify({ "isChecked": state }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(res => console.log(res.status))
+        .catch(err => console.log(err.message));
+}
+
 
 const validateForm = (form, method) => {
     const formData = new FormData(form);
@@ -52,9 +74,19 @@ const validateForm = (form, method) => {
         formData.append("id", taskData["id"]);
         formData.append("isChecked", taskData["isChecked"]);
         if (method == "POST") {
-            sendForm(formData, "POST", "add");
+            sendForm("POST", "add", formData);
         } else if (method == "PUT") {
-            sendForm(formData, "PUT", "change-task");
+            sendForm("PUT", "change-task", formData);
+        }
+
+        const buff = {};
+        for (const elem of formData) {
+            buff[elem[0]] = elem[1];
+        }
+
+        if (method == "POST") {
+            const tasksList = document.querySelector(".main__tasks-list");
+            tasksList.append(createTaskBlock(buff));
         }
     }
 
@@ -97,6 +129,8 @@ const closeModalListeners = () => {
 
 const showModal = (modalClassName, data = null) => {
     const modal = findElementByClassName(modalClassName);
+    const form = modal.querySelector(".modal__form");
+    form.reset();
 
     if (modal == null) {
         console.log("MODAL NOT FOUND");
@@ -109,8 +143,8 @@ const showModal = (modalClassName, data = null) => {
     if (data != null) {
         taskData = data;
 
-        const taskHeader = modal.querySelector(".modal__form-input");
-        const taskDescription = modal.querySelector(".modal__form-text");
+        const taskHeader = form.querySelector(".modal__form-input");
+        const taskDescription = form.querySelector(".modal__form-text");
 
         taskHeader.setAttribute("value", data["task-header"]);
         taskDescription.innerText = data["task-description"];
@@ -126,4 +160,4 @@ addTaskButton.addEventListener("click", () => {
 
 closeModalListeners();
 
-export default showModal;
+export { showModal, deleteTask, putCheckbox };
